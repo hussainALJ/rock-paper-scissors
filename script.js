@@ -4,8 +4,8 @@
 
 // Declare a variable for the user choice.
 // Declare a variable for the random computer choice.
-let humanChoice = getHumanChoice("What is your choice?");
-let computerChoice = getComputerChoice();
+let humanChoice;
+let computerChoice;
 
 // Initialize a variable for the user score with 0.
 // Initialize a variable for the computer score with 0.
@@ -16,11 +16,8 @@ let computerScore = 0;
 // Add 1 to the winners score.
 // Print the two choices.
 // Print the scores.
-// Repeat five times then declare the winner in the game
-playRound(humanChoice, computerChoice);
-console.log("Your choice: " + humanChoice + "\n" + "Computer: " + computerChoice);
-console.log("Score: " + "\n" + "You: " + humanScore + "     " + "Computer: " + computerScore)
-
+// Repeat 5 times then declare the winner in the game
+playGame(5);
 
 // Prompt the user for a choice and return it to the user var.
 function getHumanChoice(str) {
@@ -45,42 +42,69 @@ function getComputerChoice() {
 // A tie if both choices are the same,
 //  then add 1 to the winners score var.
 function playRound(user, comp) {
+        let msg;
     if (user.toLowerCase() == comp) {
-        console.log("It's a tie!");
+        msg = "It's a tie!";
     }else if (user.toLowerCase() == "rock") {
         switch (comp) {
             case "paper" :
                 ++computerScore;
-                console.log("You lose!");
+                msg = "You lose!";
                 break;
-            case "scissor" :
+            case "scissors" :
                 ++humanScore;
-                console.log("You win!");
+                msg = "You win!";
                 break;
         }
     }else if (user.toLowerCase() == "paper") {
         switch (comp) {
             case "rock" :
                 ++humanScore;
-                console.log("You win!");
+                msg = "You win!";
                 break;
             case "scissors" :
                 ++computerScore;
-                console.log("You lose!");
+                msg = "You lose!";
                 break;
         }
     }else if (user.toLowerCase() == "scissors") {
         switch (comp) {
             case "rock" :
                 ++computerScore;
-                console.log("You lose!");
+                msg = "You lose!";
                 break;
             case "paper" :
                 ++humanScore;
-                console.log("You win!");
+                msg = "You win!";
         }
     }else {
-        humanChoice = getHumanChoice("Choice invalid choose again")
+        alert("Choice invalid");
+        humanChoice = getHumanChoice("choose again")
         playRound(humanChoice, computerChoice);
+    }
+    console.log("Your choice: " + humanChoice + "\n" + "Computer: " + computerChoice);
+    console.log(msg)
+    alert(msg)
+}
+// Repeat n times then declare the winner in the game
+function playGame(n) {
+    --n;
+    humanChoice = getHumanChoice("What's your choice?");
+    computerChoice = getComputerChoice();
+    if (n > 0) {
+        playRound(humanChoice, computerChoice);
+        console.log("Score: " + "\n" + "You: " + humanScore + "     " + "Computer: " + computerScore);
+        playGame(n);
+    }else {
+        if (humanScore > computerScore) {
+            console.log("Congrats you won" + "\n" + "You: " + humanScore + "     " + "Computer: " + computerScore)
+            alert("Congrats you won!" + "\n" + "You: " + humanScore + "     " + "Computer: " + computerScore);;
+        }else if (humanScore < computerScore) {
+            console.log("You lost the game!" + "\n" + "You: " + humanScore + "     " + "Computer: " + computerScore);
+            alert("You lost the game!" + "\n" + "You: " + humanScore + "     " + "Computer: " + computerScore);
+        }else {
+            console.log("It's a tie");
+            alert("It's a tie");
+        }
     }
 }
